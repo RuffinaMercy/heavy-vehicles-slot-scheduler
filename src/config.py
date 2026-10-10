@@ -36,3 +36,7 @@ def bg_vehicles(slot):
     if PEAK_START_SLOT <= slot < PEAK_END_SLOT:
         return PEAK_VEHICLES
     return OFFPEAK_VEHICLES
+
+# ---- Hard-ban baseline ----
+BAN_START_SLOT = (7 * 60 + 30 - DAY_START) // SLOT_MINUTES   # 07:30
+BAN_END_SLOT = (9 * 60 + 30 - DAY_START) // SLOT_MINUTES     # 09:30
