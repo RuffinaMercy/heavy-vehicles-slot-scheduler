@@ -1,4 +1,4 @@
-# Heavy Vehicle Slot Scheduler (Kumbalgodu Junction)
+# Heavy Vehicle Slot Scheduler 
 
 ## Problem
 During the 8-9:30 am school and college rush, heavy vehicles reach the Kumbalgodu
