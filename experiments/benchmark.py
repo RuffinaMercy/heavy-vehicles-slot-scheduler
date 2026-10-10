@@ -10,14 +10,15 @@ def naive_first_open(values, start):
     return -1
 
 
-def bench(n, queries=2000, closed_fraction=0.99):
-    rng = random.Random(1)
-    values = [0 if rng.random() < closed_fraction else 1 for _ in range(n)]
+def bench(n, queries=2000):
+    # Worst case: only the last slot is open, so a scan walks the whole array.
+    values = [0] * n
+    values[n - 1] = 1
     tree = FirstOpenTree(n)
-    for i, v in enumerate(values):
-        if v == 0:
-            tree.update(i, 0)
-    starts = [rng.randrange(n) for _ in range(queries)]
+    for i in range(n - 1):
+        tree.update(i, 0)
+    rng = random.Random(1)
+    starts = [rng.randrange(n // 2) for _ in range(queries)]
 
     t0 = time.perf_counter()
     a = [naive_first_open(values, s) for s in starts]
@@ -26,8 +27,7 @@ def bench(n, queries=2000, closed_fraction=0.99):
     t2 = time.perf_counter()
 
     assert a == b, "tree and naive scan disagree"
-    print(f"T={n:>7}: naive {(t1 - t0) * 1000:8.1f} ms | segment tree {(t2 - t1) * 1000:8.1f} ms")
-
+    print(f"T={n:>7}: naive {(t1 - t0) * 1000:9.1f} ms | segment tree {(t2 - t1) * 1000:9.1f} ms")
 
 if __name__ == "__main__":
     for n in (72, 1_000, 10_000, 100_000):
